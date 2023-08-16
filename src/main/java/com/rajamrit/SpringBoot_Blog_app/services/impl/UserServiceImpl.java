@@ -5,6 +5,7 @@ import com.rajamrit.SpringBoot_Blog_app.exceptions.ResourceNotFoundException;
 import com.rajamrit.SpringBoot_Blog_app.payloads.UserDTO;
 import com.rajamrit.SpringBoot_Blog_app.repositories.UserRepo;
 import com.rajamrit.SpringBoot_Blog_app.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
@@ -59,24 +63,22 @@ public class UserServiceImpl implements UserService {
     }
 
     private User dtoToUser(UserDTO userDTO){
-        User user = new User();
-        user.set_id(userDTO.get_id());
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setAbout(userDTO.getAbout());
+        User user = this.modelMapper.map(userDTO, User.class);
+
+        // Manual wrapping
+        //        user.set_id(userDTO.get_id());
+        //        user.setName(userDTO.getName());
+        //        user.setEmail(userDTO.getEmail());
+        //        user.setPassword(userDTO.getPassword());
+        //        user.setAbout(userDTO.getAbout());
 
         return user;
     }
 
     public UserDTO userToDto(User user){
-        UserDTO userDTO = new UserDTO();
-        userDTO.set_id(user.get_id());
-        userDTO.setName(user.getName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setAbout(user.getAbout());
-
+        UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
         return userDTO;
     }
+
+
 }

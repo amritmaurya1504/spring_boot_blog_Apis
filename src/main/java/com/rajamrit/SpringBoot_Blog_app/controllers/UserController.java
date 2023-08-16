@@ -4,6 +4,7 @@ import com.rajamrit.SpringBoot_Blog_app.entities.User;
 import com.rajamrit.SpringBoot_Blog_app.payloads.ApiResponse;
 import com.rajamrit.SpringBoot_Blog_app.payloads.UserDTO;
 import com.rajamrit.SpringBoot_Blog_app.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,14 @@ public class UserController {
 
     // POST-create user
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO createdUser = this.userService.createUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     // PUT-update user "{userId} path Varible"
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Integer userId){
+    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO, @PathVariable Integer userId){
         UserDTO updatedUser = this.userService.updateUser(userDTO, userId);
         return ResponseEntity.ok(updatedUser);
     }
