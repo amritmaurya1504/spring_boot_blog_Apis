@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // if i don't write table here then by default it will create User named table
 @Entity
 @Table(name="users")
@@ -29,5 +32,6 @@ public class User {
     @Column(name = "user_bio", nullable = false, length = 100)
     private String about;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }
