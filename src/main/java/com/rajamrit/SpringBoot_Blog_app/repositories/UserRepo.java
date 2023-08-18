@@ -3,6 +3,8 @@ package com.rajamrit.SpringBoot_Blog_app.repositories;
 import com.rajamrit.SpringBoot_Blog_app.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /* JpaRepository provides all functionality database opertion on User
 JpaRepository is particularly a JPA specific extension for Repository.
 It has full API CrudRepository and PagingAndSortingRepository. So, basically,
@@ -10,4 +12,5 @@ It has full API CrudRepository and PagingAndSortingRepository. So, basically,
  and the APIs for sorting.
  */
 public interface UserRepo extends JpaRepository<User, Integer>{
+    Optional<User> findByEmail(String email);
 }
